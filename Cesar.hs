@@ -43,3 +43,9 @@ codificar :: Integer -> String -> String
 codificar n [] = []
 codificar n (b:bs) | esMin b = (desplazar n b): codificar n bs
                    | otherwise = b : codificar n bs
+--
+
+decodificar :: Integer -> String -> String
+decodificar n [] = []
+decodificar n (b:bs) | esMin b = (desplazar (-n) b): codificar (-n) bs
+                     | otherwise = b : codificar (-n) bs
