@@ -2,7 +2,7 @@ import Data.Char
 
 
 -- lista de minusculas de la "a" a la "z" para fasilitar otras tareas
-mIn = "abcdefghijklmnopqrstuvwxyz"
+mIn = ['a'..'z']
 
 -- "a" pertenece a una lista
 pertenece :: Char -> [Char] -> Bool
@@ -31,8 +31,8 @@ toMin 0 (b:bs) = b
 toMin n (b:bs) | 25 >= n = toMin (n-1) bs
 
 natALet :: Integer -> Char 
-natALet n | 25 >= n = toMin n mIn
-          | otherwise = natALet (n-26) 
+natALet n = toMin (mod n 27) (mIn)
+ 
 
 desplazar :: Integer -> Char -> Char
 desplazar 0 a = a
