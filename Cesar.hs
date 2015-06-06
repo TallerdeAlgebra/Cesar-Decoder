@@ -1,11 +1,9 @@
 -- lista de minusculas de la "a" a la "z" para fasilitar otras tareas
-let min = "abcdefghijklmnopqrstuvwxyz"
+min = "abcdefghijklmnopqrstuvwxyz"
 
 -- "a" pertenece a una lista
 pertenece a [] = False
-pertenece a (b,bs) | a == b = True
-			 | otherwise = pertenece a 
---
+pertenece a (b,bs) | a == b || pertenece a bs
 
 esMin a = pertenece a min
 
