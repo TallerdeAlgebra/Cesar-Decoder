@@ -4,6 +4,8 @@ import Data.String
 
 -- lista de minusculas de la "a" a la "z" para fasilitar otras tareas
 mIn = ['a'..'z']
+
+-- String para probar funciones
 tdA = "taller de algebra"
 
 -- "a" pertenece a una lista
@@ -36,8 +38,6 @@ contar a [] = 0
 contar a (b:bs) | a==b = 1+contar a bs
                 | otherwise = contar a bs
 --
-listar [] = []
-listar (b:bs)= b:(listar bs)
 
 codificar :: Integer -> String -> String
 codificar n [] = []
@@ -49,3 +49,11 @@ decodificar :: Integer -> String -> String
 decodificar n [] = []
 decodificar n (b:bs) | esMin b = (desplazar (-n) b): codificar (-n) bs
                      | otherwise = b : codificar (-n) bs
+-- generalizacion de la funcion frec
+
+
+frecLEnL [] l = []
+frecLEnL (b:bs) l = ((fromInteger $(contar b l))/(fromInteger $(cantMinusc l))) : frecLEnL bs l
+
+frec :: String -> [Float]
+frec l = frecLEnL mIn l
