@@ -29,11 +29,18 @@ letANat a | esMin a = valor a mIn
 -- generalizacion de natALet para cualquier lista
 toMin 0 (b:bs) = b
 toMin n (b:bs) | 25 >= n = toMin (n-1) bs
- 
+
+natALet :: Integer -> Char 
 natALet n | 25 >= n = toMin n mIn
           | otherwise = natALet (n-26) 
 
+desplazar :: Integer -> Char -> Char
 desplazar 0 a = a
 desplazar n a | esMin a = natALet ((letANat a)+n)
               | otherwise = a
 --
+
+cantMinusc :: String -> Integer
+cantMinusc [] = 0
+cantMinusc (b:bs) | esMin b = 1+(cantMinusc bs)
+                  | otherwise = cantMinusc bs
