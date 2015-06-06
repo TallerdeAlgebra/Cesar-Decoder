@@ -7,38 +7,21 @@ mIn = ['a'..'z']
 -- "a" pertenece a una lista
 pertenece :: Char -> [Char] -> Bool
 pertenece a [] = False
-pertenece a (b:bs) | a == b = True
-                   | otherwise = pertenece a bs
+pertenece a (b:bs) = a == b || pertenece a bs
 
 esMin :: Char -> Bool				   
 esMin a = pertenece a mIn
 
-
--- compara un elemento con una lista y le da un valor segun el primer momento en que aparece
-valor :: Char -> [Char] -> Integer
-valor a [] = 99999
--- el caso vasio no va a ser utilizado mas que para poder dar un caso bace a la recurrencia
-valor a (b:bs) | a == b = 0
-               | otherwise = 1+(valor a bs)
-
 -- letANat no puede ser exaustiva por la definicion de tipos.
 letANat :: Char -> Integer
-letANat a | esMin a = valor a mIn
-
+letANat a | esMin a = toInteger $ (ord  a)-97  -- Valor de ASCII de la letra
 
 -- generalizacion de natALet para cualquier lista
-toMin 0 (b:bs) = b
-toMin n (b:bs) | 25 >= n = toMin (n-1) bs
-
-natALet :: Integer -> Char 
-natALet n = toMin (mod n 27) (mIn)
- 
+natALet :: Integer -> Char
+natALet  n | n <= 25 && n >= 0 = chr $ fromInteger n+97
 
 desplazar :: Integer -> Char -> Char
-desplazar 0 a = a
-desplazar n a | esMin a = natALet ((letANat a)+n)
-              | otherwise = a
---
+desplazar n l | esMin l = natALet $ mod ((letANat l) + n) 26
 
 cantMinusc :: String -> Integer
 cantMinusc [] = 0
