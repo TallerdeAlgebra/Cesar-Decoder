@@ -2,12 +2,13 @@ import Data.Char
 
 
 -- lista de minusculas de la "a" a la "z" para fasilitar otras tareas
-mIn = [a..z]
+mIn = "abcdefghijklmnopqrstuvwxyz"
 
 -- "a" pertenece a una lista
 pertenece :: Char -> [Char] -> Bool
 pertenece a [] = False
-pertenece a (b:bs) | a == b || pertenece a bs = True
+pertenece a (b:bs) | a == b = True
+                   | otherwise = pertenece a bs
 
 esMin :: Char -> Bool				   
 esMin a = pertenece a mIn
