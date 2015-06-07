@@ -9,6 +9,8 @@ mIn = ['a'..'z']
 -- String para probar funciones
 tdA = "taller de algebra"
 
+
+
 -- "a" pertenece a una lista [EDIT by santi, quisiera probar esta función, creo que tiene algo mal]
 pertenece :: Char -> [Char] -> Bool
 pertenece a [] = False
@@ -67,11 +69,20 @@ frec l = frecLEnL mIn l
 
 rotar :: Integer -> String -> String
 rotar n [] = []
-rotar n (b:bs) = drop n (b:bs) ++ take n (b:bs)
+rotar n (b:bs) = drop (fromInteger $ n) (b:bs) ++ take (fromInteger $ n) (b:bs)
 
 ------------------------------------------ITEM 6----------------------------------------------
---no entiendo la consigna O_o
+chi2 :: [Float] -> [Float] -> Float
+chi2 _ [] = 0
+chi2 (b:bs) (c:cs) = (((b-c)^2)/c) + chi2 bs cs
+
+  
 
 ------------------------------------------ITEM 7----------------------------------------------
---
+-- calcula la frecuencia en las n rotaciones
+calFDeL 0 l = []
+calFDeL n l = [frec l]: calFDeL (n-1) l 
+
+-- Frecuencia del abecedario en el idioma español
+esp = [12.52, 1.42, 4.67, 5.85, 13.67, 0.67, 1.01, 0.70, 6.24, 0.44, 0.01, 4.96, 3.15, 6.70, 8.67, 2.51, 0.88, 6.86, 7.97, 4.62, 3.92, 0.90, 0.02, 0.22, 0.90, 0.52]
 
