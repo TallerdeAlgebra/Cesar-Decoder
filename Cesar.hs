@@ -79,10 +79,21 @@ chi2 (b:bs) (c:cs) = (((b-c)^2)/c) + chi2 bs cs
   
 
 ------------------------------------------ITEM 7----------------------------------------------
--- calcula la frecuencia en las n rotaciones
-calFDeL 0 l = []
-calFDeL n l = [frec l]: calFDeL (n-1) l 
-
 -- Frecuencia del abecedario en el idioma español
+esp :: [Float]
 esp = [12.52, 1.42, 4.67, 5.85, 13.67, 0.67, 1.01, 0.70, 6.24, 0.44, 0.01, 4.96, 3.15, 6.70, 8.67, 2.51, 0.88, 6.86, 7.97, 4.62, 3.92, 0.90, 0.02, 0.22, 0.90, 0.52]
 
+--distancia chi2 de la frec de apariciopn con las 25 rotaciones de la lista esp y la lista esp
+rotarFloat :: Integer -> [Float] -> [Float]
+rotarFloat n [] = []
+rotarFloat n (b:bs) = drop (fromInteger $ n) (b:bs) ++ take (fromInteger $ n) (b:bs)
+
+chi25 _ 0 = []
+chi25 l n = chi2 (rotarFloat 1 l) esp : chi25 l (n-1)
+
+minDL (b:[]) = 0
+minDL (b:(c:cs)) | c >= b = minDL (b:cs)
+                 | otherwise = 1+minDL (c:cs)
+
+descifrar :: String -> String
+descifrar l = decodificar (minDL (chi25 (frec l) 26)) l
