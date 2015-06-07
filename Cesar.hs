@@ -68,3 +68,10 @@ frec l = frecLEnL mIn l
 rotar :: Integer -> String -> String
 rotar n [] = []
 rotar n (b:bs) = drop n (b:bs) ++ take n (b:bs)
+
+------------------------------------------ITEM 6----------------------------------------------
+--no entiendo la consigna O_o
+
+------------------------------------------ITEM 7----------------------------------------------
+--
+
