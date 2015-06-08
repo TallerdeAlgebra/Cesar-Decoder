@@ -74,7 +74,7 @@ rotar n (b:bs) = drop (fromInteger $ n) (b:bs) ++ take (fromInteger $ n) (b:bs)
 ------------------------------------------ITEM 6----------------------------------------------
 chi2 :: [Float] -> [Float] -> Float
 chi2 _ [] = 0
-chi2 (b:bs) (c:cs) = (((b-c)^2)/c) + chi2 bs cs
+chi2 (b:bs) (c:cs) = (((b-c)^2)/c) + (chi2 (bs) (cs))
 
   
 
@@ -91,9 +91,9 @@ rotarFloat n (b:bs) = drop (fromInteger $ n) (b:bs) ++ take (fromInteger $ n) (b
 chi25 _ 0 = []
 chi25 l n = chi2 (rotarFloat 1 l) esp : chi25 l (n-1)
 
-minDL (b:[]) = 0
-minDL (b:(c:cs)) | c >= b = minDL (b:cs)
-                 | otherwise = 1+minDL (c:cs)
+minDL (b:[]) = 1
+minDL (b:c:ds) | c >= b = minDL (b:ds)
+               | otherwise = 1 + minDL (c:ds)
 
 descifrar :: String -> String
-descifrar l = decodificar (minDL (chi25 (frec l) 26)) l
+descifrar l = decodificar (-(minDL (chi25 (frec l) 26))) l
