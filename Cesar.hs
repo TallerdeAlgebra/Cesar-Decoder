@@ -26,7 +26,10 @@ letANat a | esMin a = toInteger $ (ord  a)-97  -- Valor de ASCII de la letra
 
 -- generalizacion de natALet para cualquier lista
 natALet :: Integer -> Char
-natALet  n = chr $ fromInteger (mod n 26)+97
+natALet  n | n <= 25 && n >= 0 = chr $ fromInteger n+97
+
+-- opcional para natALet (mod 26)
+--natALet  n = chr $ fromInteger (mod n 26)+97
 
 desplazar :: Integer -> Char -> Char
 desplazar n l | esMin l = natALet $ mod ((letANat l) + n) 26
@@ -89,11 +92,11 @@ rotarFloat n [] = []
 rotarFloat n (b:bs) = drop (fromInteger $ n) (b:bs) ++ take (fromInteger $ n) (b:bs)
 
 chi25 _ 0 = []
-chi25 l n = chi2 (rotarFloat 1 l) esp : chi25 l (n-1)
+chi25 l n = (chi2 (rotarFloat 1 l) esp) : chi25 l (n-1)
 
 minDL (b:[]) = 1
 minDL (b:c:ds) | c >= b = minDL (b:ds)
                | otherwise = 1 + minDL (c:ds)
 
 descifrar :: String -> String
-descifrar l = decodificar (-(minDL (chi25 (frec l) 26))) l
+descifrar l = decodificar ((minDL (chi25 (frec l) 26))) l
