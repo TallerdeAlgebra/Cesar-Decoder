@@ -63,14 +63,14 @@ decodificar n (b:bs) | esMin b = (desplazar (-n) b): codificar (-n) bs
 
 -- generalizacion de la funcion frec
 frecLEnL [] l = []
-frecLEnL (b:bs) l = ((fromInteger $(contar b l))/(fromInteger $(cantMinusc l))) : frecLEnL bs l
+frecLEnL (b:bs) l = (100*(fromInteger $(contar b l))/(fromInteger $(cantMinusc l))) : frecLEnL bs l
 
 frec :: String -> [Float]
 frec l = frecLEnL mIn l
 
 ------------------------------------------ITEM 5----------------------------------------------
 
-rotar :: Integer -> String -> String
+rotar :: Integer -> [a] -> [a]
 rotar n [] = []
 rotar n (b:bs) = drop (fromInteger $ n) (b:bs) ++ take (fromInteger $ n) (b:bs)
 
@@ -91,12 +91,12 @@ rotarFloat :: Integer -> [Float] -> [Float]
 rotarFloat n [] = []
 rotarFloat n (b:bs) = drop (fromInteger $ n) (b:bs) ++ take (fromInteger $ n) (b:bs)
 
-chi25 _ 0 = []
-chi25 l n = (chi2 (rotarFloat 1 l) esp) : chi25 l (n-1)
+chi25 _ _ 0 = []
+chi25 l b n = (chi2 (rotarFloat (b) l) esp) : chi25 l (b+1) (n-1)
 
 minDL (b:[]) = 1
 minDL (b:c:ds) | c >= b = minDL (b:ds)
                | otherwise = 1 + minDL (c:ds)
 
 descifrar :: String -> String
-descifrar l = decodificar ((minDL (chi25 (frec l) 26))) l
+descifrar l = decodificar ((minDL (chi25 (frec l) 0 26))) l
