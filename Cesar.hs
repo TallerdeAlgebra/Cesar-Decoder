@@ -3,7 +3,7 @@ import Data.String
 
 ------------------------------------------ITEM 1----------------------------------------------
 
--- lista de minusculas de la "a" a la "z" para fasilitar otras tareas
+-- Lista de minúsculas de la "a" a la "z" para facilitar otras tareas
 mIn = ['a'..'z']
 
 -- String para probar funciones
@@ -11,7 +11,7 @@ tdA = "taller de algebra"
 
 
 
--- "a" pertenece a una lista [EDIT by santi, quisiera probar esta función, creo que tiene algo mal]
+-- "a" pertenece a una lista [EDIT by santi, quisiera probar esta función, creo que tiene algo mal] <-- ya lo probaste? No le veo lo malo. Leu
 pertenece :: Char -> [Char] -> Bool
 pertenece a [] = False
 pertenece a (b:bs) = a == b || pertenece a bs
@@ -86,17 +86,31 @@ chi2 (b:bs) (c:cs) = (((b-c)^2)/c) + (chi2 (bs) (cs))
 esp :: [Float]
 esp = [12.52, 1.42, 4.67, 5.85, 13.67, 0.67, 1.01, 0.70, 6.24, 0.44, 0.01, 4.96, 3.15, 6.70, 8.67, 2.51, 0.88, 6.86, 7.97, 4.62, 3.92, 0.90, 0.02, 0.22, 0.90, 0.52]
 
---distancia chi2 de la frec de apariciopn con las 25 rotaciones de la lista esp y la lista esp
-rotarFloat :: Integer -> [Float] -> [Float]
-rotarFloat n [] = []
-rotarFloat n (b:bs) = drop (fromInteger $ n) (b:bs) ++ take (fromInteger $ n) (b:bs)
 
 chi25 _ _ 0 = []
-chi25 l b n = (chi2 (rotarFloat (b) l) esp) : chi25 l (b+1) (n-1)
+chi25 l b n = (chi2 (rotar (b) l) esp) : chi25 l (b+1) (n-1)
 
 minDL (b:[]) = 1
 minDL (b:c:ds) | c >= b = minDL (b:ds)
                | otherwise = 1 + minDL (c:ds)
 
+
+
+-- Veamos que sale y que opinan de esto.
+minimo :: [Float] -> Float
+minimo (a:[]) = a
+minimo (a:at) 
+	| a < minimo at = a
+	| otherwise = minimo at
+
+posicionDe :: Float -> [Float] -> Integer
+posicionDe x [] = 0   -- En realidad nunca va a llegar a este caso...
+posicionDe x (b:bs)
+	| x == b = 0
+	| otherwise = 1+posicionDe x bs
+
+
+
 descifrar :: String -> String
-descifrar l = decodificar ((minDL (chi25 (frec l) 0 26))) l
+descifrar l = decodificar (posicionDe (minimo listaChi2) listaChi2) l
+	where listaChi2 = chi25 (frec l) 0 26
