@@ -105,10 +105,10 @@ minDL (b:c:ds) | c >= b = minDL (b:ds)
 
 -- Veamos que sale y que opinan de esto.
 minimo :: [Float] -> Float
-minimo (a:[]) = a
-minimo (a:at) 
-	| a < minimo at = a
-	| otherwise = minimo at
+minimo [a] = a
+minimo (a:b:t) 
+	| a < b = minimo (a:t)
+	| otherwise = minimo (b:t)
 
 posicionDe :: Float -> [Float] -> Integer
 posicionDe x [] = 0   -- En realidad nunca va a llegar a este caso...
