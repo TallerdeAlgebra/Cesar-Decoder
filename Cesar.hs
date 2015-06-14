@@ -45,6 +45,10 @@ contar a [] = 0
 contar a (b:bs) | a==b = 1+contar a bs
                 | otherwise = contar a bs
 
+
+contarLenL	[] l = []			
+contarLenL (b:bs) l = (fromInteger $(contar b l)) : (contarLenL bs l)
+
 ------------------------------------------ITEM 2----------------------------------------------
 
 codificar :: Integer -> String -> String
@@ -61,9 +65,12 @@ decodificar n (b:bs) | esMin b = (desplazar (-n) b): codificar (-n) bs
 
 ------------------------------------------ITEM 4----------------------------------------------
 
+cant m l = (100/(fromInteger $ (sum(contarLenL m l))))
+
 -- generalizacion de la funcion frec
 frecLEnL [] l = []
-frecLEnL (b:bs) l = (100*(fromInteger $(contar b l))/(fromInteger $(cantMinusc l))) : frecLEnL bs l
+frecLEnL m l = map ( * (cant m l)) (contarLenL m l)
+
 
 frec :: String -> [Float]
 frec l = frecLEnL mIn l
